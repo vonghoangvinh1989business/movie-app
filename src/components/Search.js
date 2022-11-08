@@ -14,7 +14,7 @@ export default function Search() {
         alignItems: "center",
         maxWidth: "100vw",
         mt: "0px",
-        border: "1px solid #FF8243",
+        border: "1px solid white",
         borderRadius: "0px",
       }}
     >

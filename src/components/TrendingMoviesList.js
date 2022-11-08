@@ -1,10 +1,14 @@
 import React from "react";
-import { Grid } from "@mui/material";
+import { Grid, Typography, Divider, Stack } from "@mui/material";
 import MovieCard from "./MovieCard";
 
 function TrendingMoviesList({ trendingList }) {
   return (
     <>
+      <Stack m={2}>
+        <Typography variant="h5">TRENDING</Typography>
+      </Stack>
+      <Divider />
       <Grid
         container
         justifyContent={{

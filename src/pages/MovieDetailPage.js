@@ -48,12 +48,23 @@ function MovieDetailPage() {
         <Alert severity="error">{errorMessage}</Alert>
       ) : (
         <>
-          <Typography>Movie Info</Typography>
+          <Typography
+            variant="h4"
+            sx={{
+              mt: 2,
+              mb: 1,
+              display: "block",
+              textTransform: "uppercase",
+            }}
+          >
+            MOVIE INFO
+          </Typography>
           <Divider />
           <MovieDetailCard
             movieDetailData={movieDetailData}
             loadingDetail={loadingDetail}
           />
+          <Divider />
         </>
       )}
     </Grid>
