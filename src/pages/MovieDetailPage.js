@@ -21,7 +21,7 @@ function MovieDetailPage() {
     const fetchMovieDetailData = async () => {
       try {
         const response = await apiService.get(
-          `/movie/${movieId}?api_key=${API_KEY}`
+          `/movie/${movieId}?api_key=${API_KEY}&language=en-US&append_to_response=videos,images`
         );
         const movieDetailData = response.data;
 

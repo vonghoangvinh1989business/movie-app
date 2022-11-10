@@ -18,7 +18,7 @@ function MovieCard({ movie }) {
   return (
     <Card
       className="card"
-      sx={{ maxWidth: "250px", borderRadius: "0 !important" }}
+      sx={{ maxWidth: "200px", borderRadius: "0 !important" }}
     >
       <CardActionArea onClick={() => navigate(`/movie/${movie.id}`)}>
         <Box
@@ -31,8 +31,8 @@ function MovieCard({ movie }) {
               backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.poster_path})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
-              height: "350px",
-              width: "250px",
+              height: "300px",
+              width: "200px",
             },
           ]}
         >

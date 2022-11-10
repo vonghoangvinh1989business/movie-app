@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import RecommendIcon from "@mui/icons-material/Recommend";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import MySkeleton from "./MySkeleton";
 
 function MovieDetailCard({ movieDetailData, loadingDetail }) {
   const chipStyles = {
@@ -23,7 +24,9 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
 
   return (
     <>
-      {movieDetailData ? (
+      {loadingDetail ? (
+        <MySkeleton />
+      ) : movieDetailData ? (
         <Card sx={{ background: "transparent", borderRadius: "0 !important" }}>
           <Grid
             container

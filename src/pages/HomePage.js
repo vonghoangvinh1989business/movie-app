@@ -3,6 +3,7 @@ import apiService from "../app/apiService";
 import { API_KEY } from "../app/config";
 import { Grid, Alert } from "@mui/material";
 import TrendingMoviesList from "../components/TrendingMoviesList";
+import GenresMoviesList from "../components/GenresMoviesList";
 import LoadingScreen from "../components/LoadingScreen";
 
 function HomePage() {
@@ -53,18 +54,19 @@ function HomePage() {
           ) : (
             <Grid
               container
+              flexDirection="column"
               justifyContent={{
                 xs: "center",
                 sm: "center",
                 md: "center",
                 lg: "center",
               }}
-              sx={{
-                minHeight: "100vh",
-              }}
             >
               <Grid>
                 <TrendingMoviesList trendingList={trendingList} />
+              </Grid>
+              <Grid>
+                <GenresMoviesList />
               </Grid>
             </Grid>
           )}
