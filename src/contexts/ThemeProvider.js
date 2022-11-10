@@ -32,7 +32,7 @@ import {
 function ThemeProvider({ children }) {
   const themeOptions = {
     typography: {
-      fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
+      fontFamily: `'Oswald', sans-serif`,
       fontSize: 14,
       fontWeightLight: 300,
       fontWeightRegular: 400,

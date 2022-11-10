@@ -87,6 +87,7 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
                     mb: 1,
                     display: "block",
                     textTransform: "uppercase",
+                    color: "#797979",
                   }}
                 >
                   {movieDetailData?.original_title}
@@ -95,57 +96,65 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
                   {movieDetailData?.overview}
                 </Typography>
 
-                <Grid container>
-                  <Typography
-                    sx={{ mt: 1 }}
-                    gutterBottom
-                    variant="body2"
-                    component="div"
-                  >
-                    Genres:
-                  </Typography>
-                  {movieDetailData?.genres.map((genre) => (
-                    <Chip
-                      sx={chipStyles}
-                      key={`${genre?.id}`}
-                      size="small"
-                      label={genre?.name}
-                    />
-                  ))}
-                </Grid>
+                {movieDetailData?.genres?.length ? (
+                  <Grid container>
+                    <Typography
+                      sx={{ mt: 1 }}
+                      gutterBottom
+                      variant="body2"
+                      component="div"
+                    >
+                      Genres:
+                    </Typography>
+                    {movieDetailData?.genres.map((genre) => (
+                      <Chip
+                        sx={chipStyles}
+                        key={`${genre?.id}`}
+                        size="small"
+                        label={genre?.name}
+                      />
+                    ))}
+                  </Grid>
+                ) : (
+                  ""
+                )}
 
-                <Grid container>
-                  <Typography
-                    sx={{ mt: 1 }}
-                    gutterBottom
-                    variant="body2"
-                    component="div"
-                  >
-                    Productions Companies:
-                  </Typography>
-                  {movieDetailData?.production_companies.map((company) => (
-                    <Chip
-                      sx={{
-                        color: "white",
-                        fontSize: "10px",
-                        ml: 1,
-                        mt: 1,
-                        mb: 1,
-                        backgroundColor: "#ab003c",
-                      }}
-                      key={`${company?.id}`}
-                      size="small"
-                      label={company?.name}
-                      avatar={
-                        <Avatar
-                          alt={company?.name}
-                          src={`https://image.tmdb.org/t/p/w500/${company?.logo_path}`}
-                          variant="outlined"
-                        />
-                      }
-                    />
-                  ))}
-                </Grid>
+                {movieDetailData?.production_companies?.length ? (
+                  <Grid container>
+                    <Typography
+                      sx={{ mt: 1 }}
+                      gutterBottom
+                      variant="body2"
+                      component="div"
+                    >
+                      Productions Companies:
+                    </Typography>
+                    {movieDetailData?.production_companies.map((company) => (
+                      <Chip
+                        sx={{
+                          color: "white",
+                          fontSize: "10px",
+                          ml: 1,
+                          mt: 1,
+                          mb: 1,
+                          background: "#f50057",
+                        }}
+                        key={`${company?.id}`}
+                        size="small"
+                        label={company?.name}
+                        avatar={
+                          <Avatar
+                            alt={company?.name}
+                            src={`https://image.tmdb.org/t/p/w500/${company?.logo_path}`}
+                            variant="outlined"
+                          />
+                        }
+                      />
+                    ))}
+                  </Grid>
+                ) : (
+                  ""
+                )}
 
                 <Grid container>
                   <Typography
