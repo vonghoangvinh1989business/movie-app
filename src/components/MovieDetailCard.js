@@ -11,6 +11,7 @@ import {
 import RecommendIcon from "@mui/icons-material/Recommend";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MySkeleton from "./MySkeleton";
+import TrailerMovieList from "./TrailerMovieList";
 
 function MovieDetailCard({ movieDetailData, loadingDetail }) {
   const chipStyles = {
@@ -21,6 +22,8 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
     mt: 1,
     mb: 1,
   };
+
+  const trailerMovieList = movieDetailData?.videos?.results;
 
   return (
     <>
@@ -92,6 +95,13 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
                 >
                   {movieDetailData?.original_title}
                 </Typography>
+
+                {trailerMovieList?.length ? (
+                  <TrailerMovieList trailerMovieList={trailerMovieList} />
+                ) : (
+                  ""
+                )}
+
                 <Typography variant="body1" paragraph>
                   {movieDetailData?.overview}
                 </Typography>
