@@ -17,7 +17,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../components/Logo";
 import Search from "../components/Search";
 
-const pages = ["Discover", "Movies"];
+const pages = [
+  {
+    name: "Discover",
+    link: "/discovery/1",
+  },
+];
 const settings = ["Logout"];
 
 function MainHeader() {
@@ -91,9 +96,23 @@ function MainHeader() {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                {pages.map((item) => (
+                  <MenuItem key={item.name} onClick={handleCloseNavMenu}>
+                    <Typography
+                      component="a"
+                      variant="h6"
+                      href={item.link}
+                      textAlign="center"
+                      sx={{
+                        mr: 2,
+                        fontWeight: 600,
+                        flexGrow: 1,
+                        color: "inherit",
+                        textDecoration: "none",
+                      }}
+                    >
+                      {item.name}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -116,13 +135,15 @@ function MainHeader() {
               Home
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
+              {pages.map((item) => (
                 <Button
-                  key={page}
+                  component="a"
+                  href={item.link}
+                  key={item.name}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "white", display: "block" }}
                 >
-                  {page}
+                  {item.name}
                 </Button>
               ))}
             </Box>
@@ -159,7 +180,7 @@ function MainHeader() {
           </Toolbar>
         </Container>
       </AppBar>
-      <Search />
+      <Search placeholder={"Search Movies..."} />
     </>
   );
 }

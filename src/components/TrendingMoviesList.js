@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography, Divider, Stack, Pagination } from "@mui/material";
 import MovieCard from "./MovieCard";
-
-const MOVIE_PER_PAGE = 4;
+import * as myConstant from "../constant";
 
 function TrendingMoviesList({ trendingList }) {
-  const totalPage = Math.ceil(trendingList.length / MOVIE_PER_PAGE);
+  const totalPage = Math.ceil(trendingList.length / myConstant.MOVIE_PER_PAGE);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentData, setCurrentData] = useState([]);
 
   useEffect(() => {
-    const begin = (currentPage - 1) * MOVIE_PER_PAGE;
-    const end = begin + MOVIE_PER_PAGE;
+    const begin = (currentPage - 1) * myConstant.MOVIE_PER_PAGE;
+    const end = begin + myConstant.MOVIE_PER_PAGE;
     setCurrentData((_) => trendingList.slice(begin, end));
   }, [currentPage, trendingList]);
 
@@ -23,8 +22,8 @@ function TrendingMoviesList({ trendingList }) {
     <>
       <Stack
         m={2}
-        flexDirection="row"
-        justifyContent="space-between"
+        flexDirection="column"
+        justifyContent="center"
         alignItems="center"
       >
         <Typography variant="h5">TRENDING</Typography>

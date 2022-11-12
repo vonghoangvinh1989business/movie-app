@@ -3,29 +3,28 @@ import apiService from "../app/apiService";
 import { API_KEY } from "../app/config";
 import { Grid, Alert } from "@mui/material";
 import TrendingMoviesList from "../components/TrendingMoviesList";
+import ResultMovieList from "../components/ResultMovieList";
 import GenresMoviesList from "../components/GenresMoviesList";
 import LoadingScreen from "../components/LoadingScreen";
 
 function HomePage() {
   const [trendingList, setTrendingList] = useState([]);
-  const [loadingTrend, setLoadingTrend] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     // set loading
-    setLoadingTrend(true);
+    setLoading(true);
 
     // call api to fetch data of movies
     const fetchMoviesData = async () => {
       try {
-        const response = await apiService.get(
-          `/trending/all/day?api_key=${API_KEY}`
-        );
+        const url = `/trending/all/day?api_key=${API_KEY}`;
+        const response = await apiService.get(url);
+        const moviesData = response.data.results;
 
-        const trendingMoviesData = response.data.results;
-
-        if (trendingMoviesData.length >= 0) {
-          setTrendingList(trendingMoviesData);
+        if (moviesData?.length >= 0) {
+          setTrendingList(moviesData);
           setErrorMessage("");
         } else {
           setErrorMessage("No Trending Movies Data Found");
@@ -35,7 +34,7 @@ function HomePage() {
         setErrorMessage("No Trending Movies Data Found");
       }
 
-      setLoadingTrend(false);
+      setLoading(false);
     };
 
     fetchMoviesData();
@@ -43,7 +42,7 @@ function HomePage() {
 
   return (
     <>
-      {loadingTrend ? (
+      {loading ? (
         <LoadingScreen />
       ) : (
         <>
@@ -62,6 +61,9 @@ function HomePage() {
                 lg: "center",
               }}
             >
+              <Grid>
+                <ResultMovieList />
+              </Grid>
               <Grid>
                 <TrendingMoviesList trendingList={trendingList} />
               </Grid>

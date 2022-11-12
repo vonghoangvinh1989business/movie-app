@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 
 function TrailerMovieList({ trailerMovieList }) {
   return (
@@ -10,7 +10,7 @@ function TrailerMovieList({ trailerMovieList }) {
             .slice(0, 2)
             .map((trailer) => (
               <>
-                <Stack sx={{ m: 1 }}>
+                <Grid key={trailer.id} sx={{ m: 1 }}>
                   <Typography variant="subtitle1">{trailer?.name}</Typography>
                   <Box>
                     <iframe
@@ -22,10 +22,10 @@ function TrailerMovieList({ trailerMovieList }) {
                       title="Embedded youtube"
                     />
                   </Box>
-                </Stack>
+                </Grid>
               </>
             ))
-        : ""}
+        : "No Trailer Movie Data Found."}
     </Grid>
   );
 }

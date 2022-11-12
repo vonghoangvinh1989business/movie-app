@@ -31,8 +31,8 @@ function MovieCard({ movie }) {
               backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.poster_path})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
-              height: "300px",
-              width: "200px",
+              height: "260px",
+              width: "180px",
             },
           ]}
         >

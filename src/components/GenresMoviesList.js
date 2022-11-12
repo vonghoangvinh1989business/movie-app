@@ -97,7 +97,7 @@ function GenresMoviesList() {
           <Stack
             m={2}
             flexDirection="row"
-            justifyContent="space-between"
+            justifyContent="center"
             alignItems="center"
           >
             <Typography variant="h5">CATEGORY</Typography>

@@ -43,7 +43,6 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
             <Grid
               sx={{
                 display: "flex",
-                // alignItems: "center",
                 justifyContent: "center",
               }}
               item
@@ -57,7 +56,6 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
                 sx={{
                   display: "flex",
                   justifyContent: "center",
-                  alignItems: "center",
                 }}
               >
                 <img
