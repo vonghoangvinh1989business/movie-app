@@ -26,7 +26,9 @@ function TrendingMoviesList({ trendingList }) {
         justifyContent="center"
         alignItems="center"
       >
-        <Typography variant="h5">TRENDING</Typography>
+        <Typography sx={{ color: "#f50057" }} m={2} variant="h5">
+          TRENDING MOVIES
+        </Typography>
         <Pagination
           page={currentPage}
           count={totalPage}
@@ -54,8 +56,8 @@ function TrendingMoviesList({ trendingList }) {
                 key={movie.id}
                 item
                 xs={8}
-                sm={6}
-                md={4}
+                sm={4}
+                md={3}
                 lg={3}
               >
                 <MovieCard key={movie.id} movie={movie} />

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import apiService from "../app/apiService";
 import { API_KEY } from "../app/config";
 import { useParams } from "react-router-dom";
-import { Grid, Typography, Divider, Alert } from "@mui/material";
+import { Grid, Divider, Alert } from "@mui/material";
 import MovieDetailCard from "../components/MovieDetailCard";
+import ResultMovieList from "../components/ResultMovieList";
 
 function MovieDetailPage() {
   // get movie id parameter from url
@@ -48,18 +49,9 @@ function MovieDetailPage() {
         <Alert severity="error">{errorMessage}</Alert>
       ) : (
         <>
-          <Typography
-            variant="h4"
-            sx={{
-              mt: 2,
-              mb: 1,
-              display: "block",
-              textTransform: "uppercase",
-            }}
-          >
-            MOVIE INFO
-          </Typography>
-          <Divider />
+          <Grid>
+            <ResultMovieList />
+          </Grid>
           <MovieDetailCard
             movieDetailData={movieDetailData}
             loadingDetail={loadingDetail}

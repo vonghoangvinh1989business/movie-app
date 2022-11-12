@@ -6,7 +6,11 @@ import MainFooter from "./MainFooter";
 
 function MainLayout() {
   return (
-    <Grid sx={{ minHeight: "100vh" }}>
+    <Grid
+      sx={{
+        minHeight: "100vh",
+      }}
+    >
       <MainHeader />
       <Outlet />
       <MainFooter />

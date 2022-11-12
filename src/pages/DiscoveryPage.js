@@ -12,6 +12,7 @@ import {
   Divider,
   Typography,
   Stack,
+  Container,
 } from "@mui/material";
 import MovieCard from "../components/MovieCard";
 
@@ -71,76 +72,78 @@ function DiscoveryPage() {
             </Alert>
           ) : (
             <>
-              <Grid>
-                <ResultMovieList />
-              </Grid>
-              <Divider />
+              <Container>
+                <Grid>
+                  <ResultMovieList />
+                </Grid>
+                <Divider />
 
-              <Stack
-                container
-                m={2}
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Typography variant="h5">DISCOVERY MOVIE</Typography>
-                <Pagination
-                  size="large"
-                  count={20}
-                  page={currentPage}
-                  onChange={handlePageChange}
-                  renderItem={(item) => (
-                    <PaginationItem
-                      component={Link}
-                      to={`/discovery/${item.page}`}
-                      {...item}
-                    />
-                  )}
-                />
-              </Stack>
-              <Grid
-                container
-                justifyContent={{
-                  xs: "center",
-                  sm: "center",
-                  md: "center",
-                  lg: "center",
-                }}
-                spacing={2}
-              >
-                {discoveryMovieList.length
-                  ? discoveryMovieList.map((movie) => (
-                      <Grid
-                        display="flex"
-                        justifyContent="center"
-                        mt={1}
-                        mb={1}
-                        key={movie.id}
-                        item
-                        xs={8}
-                        sm={6}
-                        md={4}
-                        lg={3}
-                      >
-                        <MovieCard key={movie.id} movie={movie} />
-                      </Grid>
-                    ))
-                  : "No Discovery Movie Data Found."}
-              </Grid>
-              <Grid container m={2} justifyContent="center">
-                <Pagination
-                  size="large"
-                  count={20}
-                  page={currentPage}
-                  onChange={handlePageChange}
-                  renderItem={(item) => (
-                    <PaginationItem
-                      component={Link}
-                      to={`/discovery/${item.page}`}
-                      {...item}
-                    />
-                  )}
-                />
-              </Grid>
+                <Stack
+                  container
+                  m={2}
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Typography variant="h5">DISCOVERY MOVIE</Typography>
+                  <Pagination
+                    size="large"
+                    count={20}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    renderItem={(item) => (
+                      <PaginationItem
+                        component={Link}
+                        to={`/discovery/${item.page}`}
+                        {...item}
+                      />
+                    )}
+                  />
+                </Stack>
+                <Grid
+                  container
+                  justifyContent={{
+                    xs: "center",
+                    sm: "center",
+                    md: "center",
+                    lg: "center",
+                  }}
+                  spacing={2}
+                >
+                  {discoveryMovieList.length
+                    ? discoveryMovieList.map((movie) => (
+                        <Grid
+                          display="flex"
+                          justifyContent="center"
+                          mt={1}
+                          mb={1}
+                          key={movie.id}
+                          item
+                          xs={8}
+                          sm={4}
+                          md={3}
+                          lg={3}
+                        >
+                          <MovieCard key={movie.id} movie={movie} />
+                        </Grid>
+                      ))
+                    : "No Discovery Movie Data Found."}
+                </Grid>
+                <Grid container m={2} justifyContent="center">
+                  <Pagination
+                    size="large"
+                    count={20}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    renderItem={(item) => (
+                      <PaginationItem
+                        component={Link}
+                        to={`/discovery/${item.page}`}
+                        {...item}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Container>
             </>
           )}
         </>

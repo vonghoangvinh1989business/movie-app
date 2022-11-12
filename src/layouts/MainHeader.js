@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -9,21 +11,20 @@ import {
   Container,
   Avatar,
   Button,
-  Tooltip,
   MenuItem,
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../components/Logo";
 import Search from "../components/Search";
+import LoginIcon from "@mui/icons-material/Login";
 
 const pages = [
   {
-    name: "Discover",
+    name: "Discovery",
     link: "/discovery/1",
   },
 ];
-const settings = ["Logout"];
 
 function MainHeader() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -44,12 +45,32 @@ function MainHeader() {
     setAnchorElUser(null);
   };
 
+  const navigate = useNavigate();
+
+  // get auth context to use sign out function from auth provider
+  const auth = useContext(AuthContext);
+
+  const handleLogout = () => {
+    auth.logout(() => {
+      navigate("/", { replace: true });
+    });
+  };
+
+  const handleLogin = () => {
+    navigate("/login", { replace: true });
+  };
+
   return (
     <>
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Logo sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            <Logo
+              sx={{
+                display: { xs: "none", md: "flex" },
+                mr: 1,
+              }}
+            />
             <Typography
               variant="h6"
               noWrap
@@ -58,10 +79,9 @@ function MainHeader() {
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
-                fontFamily: "Roboto, Helvetica, sans-serif",
+                textDecoration: "none",
                 fontWeight: 600,
                 color: "inherit",
-                textDecoration: "none",
               }}
             >
               Home
@@ -149,33 +169,53 @@ function MainHeader() {
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
+              {auth.user ? (
+                <>
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="../../naruto.png"
+                      sx={{
+                        width: 50,
+                        height: 50,
+                      }}
+                    />
+                  </IconButton>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    <MenuItem key="logout" onClick={handleLogout}>
+                      <Typography textAlign="center">Log Out</Typography>
+                    </MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                <MenuItem>
+                  <Button
+                    onClick={handleLogin}
+                    size="medium"
+                    color="inherit"
+                    startIcon={<LoginIcon />}
+                  >
+                    <Typography sx={{ textTransform: "capitalize" }}>
+                      Sign in
+                    </Typography>
+                  </Button>
+                </MenuItem>
+              )}
             </Box>
           </Toolbar>
         </Container>

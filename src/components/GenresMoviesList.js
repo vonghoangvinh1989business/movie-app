@@ -100,7 +100,9 @@ function GenresMoviesList() {
             justifyContent="center"
             alignItems="center"
           >
-            <Typography variant="h5">CATEGORY</Typography>
+            <Typography sx={{ color: "#f50057" }} variant="h5">
+              MOVIE GENRES
+            </Typography>
           </Stack>
           <Divider />
           <Grid
@@ -115,11 +117,14 @@ function GenresMoviesList() {
             p={2}
           >
             {genresList?.length ? (
-              <Grid item xs={2} md={2}>
+              <Grid item xs={1} sm={1} md={1} lg={1}>
                 <Stack direction="column">
-                  <Typography variant="body1">Genres</Typography>
+                  <Typography sx={{ color: "#f50057" }} variant="body1">
+                    Genres
+                  </Typography>
                   {genresList.map((genre) => (
                     <ListItemButton
+                      disableGutters
                       key={genre.id}
                       onClick={() => setGenreId(genre.id)}
                     >
@@ -127,7 +132,7 @@ function GenresMoviesList() {
                         primaryTypographyProps={{
                           fontSize: 15,
                           fontWeight: "small",
-                          lineHeight: "12px",
+                          lineHeight: "20px",
                         }}
                         primary={genre.name}
                       />
@@ -140,7 +145,7 @@ function GenresMoviesList() {
             )}
 
             {movieList.length ? (
-              <Grid item xs={10} md={10}>
+              <Grid item xs={11} sm={11} md={11} lg={11}>
                 <Grid
                   container
                   justifyContent={{
@@ -159,8 +164,8 @@ function GenresMoviesList() {
                       key={movie.id}
                       item
                       xs={8}
-                      sm={6}
-                      md={4}
+                      sm={4}
+                      md={3}
                       lg={3}
                     >
                       <MovieCard key={movie.id} movie={movie} />

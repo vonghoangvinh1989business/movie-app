@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import apiService from "../app/apiService";
 import { API_KEY } from "../app/config";
-import { Grid, Alert } from "@mui/material";
+import { Grid, Alert, Container } from "@mui/material";
 import TrendingMoviesList from "../components/TrendingMoviesList";
 import ResultMovieList from "../components/ResultMovieList";
 import GenresMoviesList from "../components/GenresMoviesList";
@@ -51,26 +51,28 @@ function HomePage() {
               {errorMessage}
             </Alert>
           ) : (
-            <Grid
-              container
-              flexDirection="column"
-              justifyContent={{
-                xs: "center",
-                sm: "center",
-                md: "center",
-                lg: "center",
-              }}
-            >
-              <Grid>
-                <ResultMovieList />
+            <Container>
+              <Grid
+                container
+                flexDirection="column"
+                justifyContent={{
+                  xs: "center",
+                  sm: "center",
+                  md: "center",
+                  lg: "center",
+                }}
+              >
+                <Grid>
+                  <ResultMovieList />
+                </Grid>
+                <Grid>
+                  <TrendingMoviesList trendingList={trendingList} />
+                </Grid>
+                <Grid>
+                  <GenresMoviesList />
+                </Grid>
               </Grid>
-              <Grid>
-                <TrendingMoviesList trendingList={trendingList} />
-              </Grid>
-              <Grid>
-                <GenresMoviesList />
-              </Grid>
-            </Grid>
+            </Container>
           )}
         </>
       )}
