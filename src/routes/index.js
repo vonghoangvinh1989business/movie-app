@@ -7,6 +7,8 @@ import MovieDetailPage from "../pages/MovieDetailPage";
 import DiscoveryPage from "../pages/DiscoveryPage";
 import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
+import FavoritePage from "../pages/FavoritePage";
+import AuthRequire from "./AuthRequire";
 
 function Router() {
   return (
@@ -15,6 +17,14 @@ function Router() {
         <Route index element={<HomePage />} />
         <Route path="/movie/:movieId" element={<MovieDetailPage />} />
         <Route path="/discovery/:pageId" element={<DiscoveryPage />} />
+        <Route
+          path="/favorite"
+          element={
+            <AuthRequire>
+              <FavoritePage />
+            </AuthRequire>
+          }
+        />
       </Route>
 
       <Route element={<BlankLayout />}>

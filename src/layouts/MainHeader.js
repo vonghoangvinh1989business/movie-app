@@ -171,16 +171,22 @@ function MainHeader() {
             <Box sx={{ flexGrow: 0 }}>
               {auth.user ? (
                 <>
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="../../naruto.png"
-                      sx={{
-                        width: 50,
-                        height: 50,
-                      }}
-                    />
-                  </IconButton>
+                  <Button onClick={handleOpenUserMenu} sx={{ p: 1 }}>
+                    <Box mr="5px">
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="../../profile.png"
+                        sx={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: "0px",
+                        }}
+                      ></Avatar>
+                    </Box>
+                    <Typography variant="body1">
+                      {auth?.user.username}
+                    </Typography>
+                  </Button>
                   <Menu
                     sx={{ mt: "45px" }}
                     id="menu-appbar"

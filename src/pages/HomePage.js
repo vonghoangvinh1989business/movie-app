@@ -6,11 +6,15 @@ import TrendingMoviesList from "../components/TrendingMoviesList";
 import ResultMovieList from "../components/ResultMovieList";
 import GenresMoviesList from "../components/GenresMoviesList";
 import LoadingScreen from "../components/LoadingScreen";
+import useSession from "../hooks/useSession";
 
 function HomePage() {
   const [trendingList, setTrendingList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  // TODO: implement
+  useSession();
 
   useEffect(() => {
     // set loading

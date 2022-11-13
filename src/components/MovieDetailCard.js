@@ -94,11 +94,7 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
                   {movieDetailData?.original_title}
                 </Typography>
 
-                {trailerMovieList?.length ? (
-                  <TrailerMovieList trailerMovieList={trailerMovieList} />
-                ) : (
-                  ""
-                )}
+                <TrailerMovieList trailerMovieList={trailerMovieList} />
 
                 <Typography variant="body1" paragraph>
                   {movieDetailData?.overview}

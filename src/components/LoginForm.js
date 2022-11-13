@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FormProvider, FTextField } from "./form";
 import * as myConstant from "../constant";
 import { Stack, IconButton, InputAdornment, Button, Box } from "@mui/material";
@@ -20,14 +20,17 @@ function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
-  let from = navigate.state?.from?.path || "/";
+  const location = useLocation();
 
   // get auth context to use sign in function from auth provider
   const auth = useContext(AuthContext);
 
   // handle click on login button
   const handleLogin = (formData) => {
-    auth.login(formData.username, () => {
+    let from = location.state?.from?.pathname || "/";
+    let username = formData.username;
+
+    auth.login(username, () => {
       navigate(from, { replace: true });
     });
   };
