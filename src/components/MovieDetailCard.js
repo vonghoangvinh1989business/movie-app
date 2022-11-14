@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import apiService from "../app/apiService";
 import { API_KEY } from "../app/config";
 import { styled } from "@mui/material/styles";
@@ -18,6 +18,7 @@ import RecommendIcon from "@mui/icons-material/Recommend";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MySkeleton from "./MySkeleton";
 import TrailerMovieList from "./TrailerMovieList";
+import BasicModal from "./BasicModal";
 import useSession from "../hooks/useSession";
 import useAccount from "../hooks/useAccount";
 import useFavoriteStatusOfMovie from "../hooks/useFavoriteStatusOfMovie";
@@ -27,61 +28,50 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
   let { sessionId } = useSession();
   let { accountId } = useAccount();
   let movieId = movieDetailData?.id || "";
-  const [loading, setLoading] = useState(false);
+
   const [favorite, setFavorite] = useFavoriteStatusOfMovie({ movieId });
   const [markResult, setMarkResult] = useState("");
 
-  useEffect(() => {
-    // set loading
-    setLoading(true);
+  // post api to mark a movie is favorite or not
+  const setMovieAsFavorite = async (markedFavorite) => {
+    if (!movieId || !sessionId || !accountId) {
+      setMarkResult("Error happened. Sorry, try again later.");
+      return;
+    }
 
-    // post api to mark a movie is favorite or not
-    const setMovieAsFavorite = async () => {
-      if (!movieId || !sessionId || !accountId) {
-        setMarkResult("Error happened. Sorry, try again later.");
-        return;
-      }
-
-      try {
-        const responseSetFavorite = await apiService.post(
-          `/account/${accountId}/favorite?api_key=${API_KEY}&session_id=${sessionId}`,
-          {
-            media_type: "movie",
-            media_id: movieId,
-            favorite: favorite,
-          }
-        );
-
-        const responseSetFavoriteData = responseSetFavorite?.data;
-
-        if (responseSetFavoriteData?.success === true) {
-          setMarkResult("Update Successfully.");
-        } else {
-          setMarkResult("Update Failed.");
+    try {
+      const responseSetFavorite = await apiService.post(
+        `/account/${accountId}/favorite?api_key=${API_KEY}&session_id=${sessionId}`,
+        {
+          media_type: "movie",
+          media_id: movieId,
+          favorite: markedFavorite,
         }
-      } catch (error) {
-        console.log(`Error message: ${error}`);
-        setMarkResult(
-          "Can not mark this movie as your favorite due to error happened. Sorry, try again later."
-        );
+      );
+
+      const responseSetFavoriteData = responseSetFavorite?.data;
+
+      if (responseSetFavoriteData?.success === true) {
+        setMarkResult("Update Successfully.");
+      } else {
+        setMarkResult("Update Failed.");
       }
-
-      setLoading(false);
-    };
-
-    // call function to mark favorite
-    setMovieAsFavorite();
-  }, [favorite, sessionId, accountId, movieId]);
+    } catch (error) {
+      console.log(`Error message: ${error}`);
+      setMarkResult("Error Happened. Sorry, try again later.");
+    }
+  };
 
   // handle set favorite
-  const handleMarkFavorite = (_, markedFavorite) => {
+  const handleMarkFavorite = async (_, markedFavorite) => {
+    await setMovieAsFavorite(markedFavorite);
     setFavorite(markedFavorite);
   };
 
   const IOSSwitch = styled((props) => (
     <Tooltip title="Mark this movie as your favorite">
       <Switch
-        defaultChecked={favorite}
+        checked={favorite}
         onChange={handleMarkFavorite}
         focusVisibleClassName=".Mui-focusVisible"
         disableRipple
@@ -101,7 +91,7 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
         color: "#fff",
         "& + .MuiSwitch-track": {
           backgroundColor:
-            theme.palette.mode === "dark" ? "#2ECA45" : "#65C466",
+            theme.palette.mode === "dark" ? "#f50057" : "#f50057",
           opacity: 1,
           border: 0,
         },
@@ -110,7 +100,7 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
         },
       },
       "&.Mui-focusVisible .MuiSwitch-thumb": {
-        color: "#33cf4d",
+        color: "#f50057",
         border: "6px solid #fff",
       },
       "&.Mui-disabled .MuiSwitch-thumb": {
@@ -221,8 +211,10 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
                 <Stack direction="row" alignItems="center">
                   <FormControlLabel
                     control={<IOSSwitch sx={{ m: 2 }} />}
-                    label="Mark as Your Favorite"
+                    label={"Mark this as your favorite."}
                   />
+
+                  {markResult && <BasicModal textContent={markResult} />}
                 </Stack>
 
                 <TrailerMovieList trailerMovieList={trailerMovieList} />

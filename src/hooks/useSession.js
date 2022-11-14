@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import apiService from "../app/apiService";
 import { API_KEY } from "../app/config";
+import * as myConstant from "../constant";
 
 // custom hook
 function useSession() {
@@ -28,8 +29,8 @@ function useSession() {
         const responseAuthentication = await apiService.post(
           `/authentication/token/validate_with_login?api_key=${API_KEY}`,
           {
-            username: "vonghoangvinh1989",
-            password: "23011989",
+            username: myConstant.TEST_DBUSERNAME,
+            password: myConstant.TEST_DBPASSWORD,
             request_token: requestToken,
           }
         );
