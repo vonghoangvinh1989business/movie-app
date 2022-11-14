@@ -21,7 +21,7 @@ function ResultMovieList() {
     // call api to fetch data when we have keyword to search movie
     const fetchSearchMoviesData = async () => {
       try {
-        const url = `/search/multi?api_key=${API_KEY}&query=${keyword}&language=en-US&page=1`;
+        const url = `/search/movie?api_key=${API_KEY}&query=${keyword}&language=en-US&page=1`;
         const response = await apiService.get(url);
         const moviesDataResult = response.data.results;
 

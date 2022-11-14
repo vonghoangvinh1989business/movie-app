@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import apiService from "../app/apiService";
+import { API_KEY } from "../app/config";
+import { styled } from "@mui/material/styles";
 import {
   Grid,
   Box,
@@ -7,13 +10,136 @@ import {
   Chip,
   Avatar,
   Card,
+  FormControlLabel,
+  Switch,
 } from "@mui/material";
 import RecommendIcon from "@mui/icons-material/Recommend";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MySkeleton from "./MySkeleton";
 import TrailerMovieList from "./TrailerMovieList";
+import useSession from "../hooks/useSession";
+import useAccount from "../hooks/useAccount";
 
 function MovieDetailCard({ movieDetailData, loadingDetail }) {
+  const [favorite, setFavorite] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [markResult, setMarkResult] = useState("");
+
+  // TODO: implement
+
+  // try to get sessionId and accountId from the database website
+  let { sessionId } = useSession();
+  let { accountId } = useAccount();
+
+  // try to get movie id from the movie detail data
+  let movieId = movieDetailData?.id || "";
+
+  useEffect(() => {
+    // set loading
+    setLoading(true);
+
+    const setMovieAsFavorite = async () => {
+      if (!movieId || !sessionId || !accountId) {
+        setMarkResult(
+          "Can not mark this movie as your favorite due to error happened. Sorry, try again later."
+        );
+        return;
+      }
+
+      try {
+        const responseSetFavorite = await apiService.post(
+          `/account/${accountId}/favorite?api_key=${API_KEY}&session_id=${sessionId}`,
+          {
+            media_type: "movie",
+            media_id: movieId,
+            favorite: favorite,
+          }
+        );
+
+        const responseSetFavoriteData = responseSetFavorite?.data;
+
+        if (responseSetFavoriteData?.success === true) {
+          setMarkResult("Update Successfully.");
+        } else {
+          setMarkResult("Update Failed.");
+        }
+      } catch (error) {
+        console.log(`Error message: ${error}`);
+        setMarkResult(
+          "Can not mark this movie as your favorite due to error happened. Sorry, try again later."
+        );
+      }
+
+      setLoading(false);
+    };
+
+    // call api to set movie as favorite
+    setMovieAsFavorite();
+  }, [favorite, sessionId, movieId, accountId]);
+
+  // handle set favorite
+  const hangleMarkFavorite = (_, markedFavorite) => {
+    setFavorite(markedFavorite);
+  };
+
+  const IOSSwitch = styled((props) => (
+    <Switch
+      checked={favorite}
+      onChange={hangleMarkFavorite}
+      focusVisibleClassName=".Mui-focusVisible"
+      disableRipple
+      {...props}
+    />
+  ))(({ theme }) => ({
+    width: 42,
+    height: 26,
+    padding: 0,
+    "& .MuiSwitch-switchBase": {
+      padding: 0,
+      margin: 2,
+      transitionDuration: "300ms",
+      "&.Mui-checked": {
+        transform: "translateX(16px)",
+        color: "#fff",
+        "& + .MuiSwitch-track": {
+          backgroundColor:
+            theme.palette.mode === "dark" ? "#2ECA45" : "#65C466",
+          opacity: 1,
+          border: 0,
+        },
+        "&.Mui-disabled + .MuiSwitch-track": {
+          opacity: 0.5,
+        },
+      },
+      "&.Mui-focusVisible .MuiSwitch-thumb": {
+        color: "#33cf4d",
+        border: "6px solid #fff",
+      },
+      "&.Mui-disabled .MuiSwitch-thumb": {
+        color:
+          theme.palette.mode === "light"
+            ? theme.palette.grey[100]
+            : theme.palette.grey[600],
+      },
+      "&.Mui-disabled + .MuiSwitch-track": {
+        opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
+      },
+    },
+    "& .MuiSwitch-thumb": {
+      boxSizing: "border-box",
+      width: 22,
+      height: 22,
+    },
+    "& .MuiSwitch-track": {
+      borderRadius: 26 / 2,
+      backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
+      opacity: 1,
+      transition: theme.transitions.create(["background-color"], {
+        duration: 500,
+      }),
+    },
+  }));
+
   const chipStyles = {
     backgroundColor: "red",
     color: "white",
@@ -93,6 +219,13 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
                 >
                   {movieDetailData?.original_title}
                 </Typography>
+
+                <Stack direction="row" alignItems="center">
+                  <FormControlLabel
+                    control={<IOSSwitch sx={{ m: 2 }} defaultChecked />}
+                    label="Mark as Your Favorite"
+                  />
+                </Stack>
 
                 <TrailerMovieList trailerMovieList={trailerMovieList} />
 

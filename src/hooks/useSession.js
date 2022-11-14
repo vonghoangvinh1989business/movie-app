@@ -7,8 +7,6 @@ function useSession() {
   // call api to get session id
   const getSessionId = async () => {
     try {
-      console.log("go to getSessionid session");
-
       let sessionId = "";
 
       // get request token first
@@ -26,8 +24,6 @@ function useSession() {
       }
 
       if (requestToken) {
-        console.log(`request token is: ${requestToken}`);
-
         // const jsonPayLoad = JSON.stringify({ request_token: requestToken });
         const responseAuthentication = await apiService.post(
           `/authentication/token/validate_with_login?api_key=${API_KEY}`,
@@ -57,7 +53,6 @@ function useSession() {
           }
         }
 
-        console.log(`session id is: ${sessionId}`);
         return sessionId;
       } else {
         return "";
@@ -72,24 +67,19 @@ function useSession() {
 
   useEffect(() => {
     const getSessionIdOrGenerate = async () => {
-      console.log(`go to getSessionIdOrGenerate`);
-      const value = window.localStorage.getItem("session_id");
-
-      console.log(`value is: ${value}`);
+      const value = window.sessionStorage.getItem("session_id");
 
       if (value) {
-        console.log(`go here 1`);
         try {
-          return JSON.parse(value);
+          setSessionId(JSON.parse(value));
         } catch (error) {
-          window.localStorage.removeItem("session_id");
+          window.sessionStorage.removeItem("session_id");
         }
       } else {
-        console.log(`go here 2`);
         let resultSession = await getSessionId();
         if (resultSession) {
           setSessionId(resultSession);
-          window.localStorage.setItem(
+          window.sessionStorage.setItem(
             "session_id",
             JSON.stringify(resultSession)
           );
@@ -100,9 +90,7 @@ function useSession() {
     getSessionIdOrGenerate();
   }, [sessionId]);
 
-  // console.log(`sessionId is: ${JSON.stringify(sessionId)}`);
-
-  // return [state, setState];
+  return { sessionId };
 }
 
 export default useSession;

@@ -12,7 +12,7 @@ function TrailerMovieList({ trailerMovieList }) {
               <>
                 <Grid key={trailer.id} sx={{ m: 1 }}>
                   <Typography variant="subtitle1">{trailer?.name}</Typography>
-                  <Box>
+                  <Box key={trailer.id}>
                     <iframe
                       width="300"
                       height="300"
