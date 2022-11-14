@@ -67,19 +67,19 @@ function useSession() {
 
   useEffect(() => {
     const getSessionIdOrGenerate = async () => {
-      const value = window.sessionStorage.getItem("session_id");
+      const value = window.localStorage.getItem("session_id");
 
       if (value) {
         try {
           setSessionId(JSON.parse(value));
         } catch (error) {
-          window.sessionStorage.removeItem("session_id");
+          window.localStorage.removeItem("session_id");
         }
       } else {
         let resultSession = await getSessionId();
         if (resultSession) {
           setSessionId(resultSession);
-          window.sessionStorage.setItem(
+          window.localStorage.setItem(
             "session_id",
             JSON.stringify(resultSession)
           );

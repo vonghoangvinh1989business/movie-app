@@ -10,13 +10,13 @@ function useAccount() {
   useEffect(() => {
     const getAccountIdFromApiOrLocalStorage = async () => {
       try {
-        const value = window.sessionStorage.getItem("account_id");
+        const value = window.localStorage.getItem("account_id");
 
         if (value) {
           try {
             setAccountId(JSON.parse(value));
           } catch (error) {
-            window.sessionStorage.removeItem("account_id");
+            window.localStorage.removeItem("account_id");
           }
         } else {
           // get request token first
@@ -29,7 +29,7 @@ function useAccount() {
 
           if (response_account_id) {
             setAccountId(response_account_id);
-            window.sessionStorage.setItem(
+            window.localStorage.setItem(
               "account_id",
               JSON.stringify(response_account_id)
             );

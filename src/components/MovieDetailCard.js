@@ -13,36 +13,32 @@ import {
   FormControlLabel,
   Switch,
 } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 import RecommendIcon from "@mui/icons-material/Recommend";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MySkeleton from "./MySkeleton";
 import TrailerMovieList from "./TrailerMovieList";
 import useSession from "../hooks/useSession";
 import useAccount from "../hooks/useAccount";
+import useFavoriteStatusOfMovie from "../hooks/useFavoriteStatusOfMovie";
 
 function MovieDetailCard({ movieDetailData, loadingDetail }) {
-  const [favorite, setFavorite] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [markResult, setMarkResult] = useState("");
-
-  // TODO: implement
-
   // try to get sessionId and accountId from the database website
   let { sessionId } = useSession();
   let { accountId } = useAccount();
-
-  // try to get movie id from the movie detail data
   let movieId = movieDetailData?.id || "";
+  const [loading, setLoading] = useState(false);
+  const [favorite, setFavorite] = useFavoriteStatusOfMovie({ movieId });
+  const [markResult, setMarkResult] = useState("");
 
   useEffect(() => {
     // set loading
     setLoading(true);
 
+    // post api to mark a movie is favorite or not
     const setMovieAsFavorite = async () => {
       if (!movieId || !sessionId || !accountId) {
-        setMarkResult(
-          "Can not mark this movie as your favorite due to error happened. Sorry, try again later."
-        );
+        setMarkResult("Error happened. Sorry, try again later.");
         return;
       }
 
@@ -73,23 +69,25 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
       setLoading(false);
     };
 
-    // call api to set movie as favorite
+    // call function to mark favorite
     setMovieAsFavorite();
-  }, [favorite, sessionId, movieId, accountId]);
+  }, [favorite, sessionId, accountId, movieId]);
 
   // handle set favorite
-  const hangleMarkFavorite = (_, markedFavorite) => {
+  const handleMarkFavorite = (_, markedFavorite) => {
     setFavorite(markedFavorite);
   };
 
   const IOSSwitch = styled((props) => (
-    <Switch
-      checked={favorite}
-      onChange={hangleMarkFavorite}
-      focusVisibleClassName=".Mui-focusVisible"
-      disableRipple
-      {...props}
-    />
+    <Tooltip title="Mark this movie as your favorite">
+      <Switch
+        defaultChecked={favorite}
+        onChange={handleMarkFavorite}
+        focusVisibleClassName=".Mui-focusVisible"
+        disableRipple
+        {...props}
+      />
+    </Tooltip>
   ))(({ theme }) => ({
     width: 42,
     height: 26,
@@ -222,7 +220,7 @@ function MovieDetailCard({ movieDetailData, loadingDetail }) {
 
                 <Stack direction="row" alignItems="center">
                   <FormControlLabel
-                    control={<IOSSwitch sx={{ m: 2 }} defaultChecked />}
+                    control={<IOSSwitch sx={{ m: 2 }} />}
                     label="Mark as Your Favorite"
                   />
                 </Stack>

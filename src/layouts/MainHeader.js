@@ -24,6 +24,10 @@ const pages = [
     name: "Discovery",
     link: "/discovery/1",
   },
+  {
+    name: "Favorite",
+    link: "/favorite",
+  },
 ];
 
 function MainHeader() {
