@@ -46,7 +46,7 @@ function TrendingMoviesList({ trendingList }) {
         }}
         spacing={2}
       >
-        {currentData.length
+        {currentData?.length
           ? currentData.map((movie) => (
               <Grid
                 display="flex"

@@ -144,7 +144,7 @@ function GenresMoviesList() {
               "No Genres List Data Found."
             )}
 
-            {movieList.length ? (
+            {movieList?.length ? (
               <Grid item xs={11} sm={11} md={11} lg={11}>
                 <Grid
                   container

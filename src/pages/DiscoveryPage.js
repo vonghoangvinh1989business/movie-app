@@ -109,7 +109,7 @@ function DiscoveryPage() {
                   }}
                   spacing={2}
                 >
-                  {discoveryMovieList.length
+                  {discoveryMovieList?.length
                     ? discoveryMovieList.map((movie) => (
                         <Grid
                           display="flex"

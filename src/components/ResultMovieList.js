@@ -68,7 +68,7 @@ function ResultMovieList() {
               mt={0}
               p={2}
             >
-              {resultList.length
+              {resultList?.length
                 ? resultList.map((movie) => (
                     <Grid
                       display="flex"

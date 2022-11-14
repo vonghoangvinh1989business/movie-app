@@ -47,7 +47,7 @@ function useFavorite() {
     fetchFavoriteList();
   }, [sessionId, accountId]);
 
-  return { favoriteList, errorMessage, loadingFavorite };
+  return [favoriteList, errorMessage, loadingFavorite];
 }
 
 export default useFavorite;

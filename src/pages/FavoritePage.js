@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 function FavoritePage() {
-  const { favoriteList, errorMessage, loadingFavorite } = useFavorite();
+  const [favoriteList, errorMessage, loadingFavorite] = useFavorite();
 
   return (
     <>
@@ -53,7 +53,7 @@ function FavoritePage() {
               }}
               p={2}
             >
-              {favoriteList.length ? (
+              {favoriteList?.length ? (
                 <Grid item xs={11} sm={11} md={11} lg={11}>
                   <Grid
                     container
