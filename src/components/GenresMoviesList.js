@@ -34,7 +34,7 @@ function GenresMoviesList() {
 
         const genresData = response.data.genres;
 
-        if (genresData.length >= 0) {
+        if (genresData?.length >= 0) {
           setGenresList(genresData);
           setErrorMessage("");
         } else {
@@ -67,7 +67,7 @@ function GenresMoviesList() {
         const response = await apiService.get(`${url}`);
         const movieListData = response.data.results;
 
-        if (movieListData.length >= 0) {
+        if (movieListData?.length >= 0) {
           setMovieList(movieListData);
           setErrorMessage("");
         } else {
